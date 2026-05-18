@@ -1,0 +1,11 @@
+# Dataset
+dataset-resized/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Python/OS files
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db
