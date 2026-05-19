@@ -51,6 +51,14 @@ def test_load_json_invalid_content_raises(tmp_path: Path) -> None:
         load_json(bad)
 
 
+def test_save_json_to_unwritable_path_raises(tmp_path: Path) -> None:
+    """save_json() raises OSError when the destination cannot be written."""
+    not_a_dir = tmp_path / "file.txt"
+    not_a_dir.write_text("x", encoding="utf-8")
+    with pytest.raises(OSError):
+        save_json({"a": 1}, not_a_dir / "nested" / "out.json")
+
+
 def test_timestamp_format() -> None:
     """timestamp() returns a 15-character ISO-like string with a 'T'."""
     stamp = timestamp()
