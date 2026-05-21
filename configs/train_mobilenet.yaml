@@ -9,3 +9,6 @@ model:
 training:
   epochs: 20
   learning_rate: 0.001
+
+# CPU fallback: train.py reads cpu_batch_size when no GPU is detected.
+cpu_batch_size: 16

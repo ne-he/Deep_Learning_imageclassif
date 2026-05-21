@@ -1,5 +1,6 @@
 # Development dependencies (inherits production requirements).
 -r requirements.txt
+ml_dtypes>=0.5
 pytest==7.4.4
 pytest-cov==4.1.0
 black==24.4.2
