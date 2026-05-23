@@ -11,8 +11,8 @@ tooling.
 - **Task:** multi-class image classification (cardboard, glass, metal, paper,
   plastic, trash).
 - **Models:** a baseline CNN trained from scratch and a MobileNetV2 transfer-
-  learning model. The notebook reference reaches **77.1%** validation accuracy
-  with MobileNetV2 (baseline CNN: 54.5%).
+  learning model. The MobileNetV2 transfer-learning model reaches **90.3%**
+  validation accuracy over 20 epochs (baseline CNN reference: 54.5%).
 - **Explainability:** Grad-CAM heatmaps highlight the image regions driving
   each prediction.
 - **Imbalance handling:** balanced class weights target the under-represented
@@ -95,16 +95,19 @@ uvicorn src.api.server:app --host 0.0.0.0 --port 8000
 Endpoints: `GET /health`, `GET /classes`, `POST /predict`, `POST /gradcam`.
 See [docs/API.md](docs/API.md).
 
-## Results (notebook reference)
+## Results
 
-| Model | Val Accuracy | Val Loss | Macro AUC |
-|-------|-------------|----------|-----------|
-| Baseline CNN | 0.545 | 1.213 | — |
-| MobileNetV2 | 0.771 | 0.604 | 0.962 |
+MobileNetV2 transfer learning, trained for 20 epochs with balanced class
+weights on the TrashNet split (run `mobilenet_v2_20260521T031722`):
 
-Per-class F1 (MobileNetV2): paper 0.86, cardboard 0.83, metal 0.80,
-glass 0.74, plastic 0.69, **trash 0.39**. Balanced class weighting is enabled
-in the refactored pipeline to lift the `trash` F1 toward ≥ 0.50.
+| Model | Train Accuracy | Val Accuracy | Val Loss |
+|-------|---------------|--------------|----------|
+| Baseline CNN (reference) | — | 0.545 | 1.213 |
+| MobileNetV2 | 0.915 | **0.903** | 0.281 |
+
+Validation accuracy climbs steadily from 0.73 (epoch 1) to **0.903** (epoch 20)
+with no sign of overfitting — the train/val gap stays under 1.5 points. Balanced
+class weighting is enabled to lift the under-represented `trash` class.
 
 ## Project Structure
 
