@@ -42,6 +42,7 @@ class GradCAM:
         self.model = model
         self.last_conv_layer_name = last_conv_layer_name or get_last_conv_layer(model)
         self._head_layers: list = []
+        self._img_size = int(model.inputs[0].shape[1] or _DEFAULT_IMG_SIZE)
         self._feature_model = self._build_feature_model()
         logger.info("GradCAM initialized on conv layer '%s'", self.last_conv_layer_name)
 
@@ -58,7 +59,7 @@ class GradCAM:
         """
         for idx, layer in enumerate(self.model.layers):
             if layer.name == self.last_conv_layer_name:
-                return keras.Model(self.model.inputs, [layer.output, self.model.output])
+                return self._build_flat_feature_model()
             if hasattr(layer, "layers"):
                 for sub_layer in layer.layers:
                     if sub_layer.name == self.last_conv_layer_name:
@@ -66,6 +67,26 @@ class GradCAM:
                         return keras.Model(layer.input, [sub_layer.output, layer.output])
         logger.error("Conv layer '%s' not found", self.last_conv_layer_name)
         raise ModelError(f"Layer not found: {self.last_conv_layer_name}")
+
+    def _build_flat_feature_model(self) -> keras.Model:
+        """Rebuild a flat Sequential as a functional graph for Grad-CAM.
+
+        Keras 3 does not expose ``layer.output`` / ``model.output`` for a
+        ``Sequential`` until it has been called, so the (already-trained)
+        layers are re-applied on a fresh ``Input`` to obtain the symbolic conv
+        feature map and predictions. Layer weights are shared, not copied.
+
+        Returns:
+            A model emitting ``[conv_output, predictions]``.
+        """
+        inputs = keras.Input(shape=self.model.inputs[0].shape[1:])
+        x = inputs
+        conv_output = None
+        for layer in self.model.layers:
+            x = layer(x)
+            if layer.name == self.last_conv_layer_name:
+                conv_output = x
+        return keras.Model(inputs, [conv_output, x])
 
     def compute_heatmap(
         self, img_array: np.ndarray, pred_index: Optional[int] = None
@@ -148,7 +169,7 @@ class GradCAM:
                 logger.warning("Skipping unreadable image: %s", img_path)
                 continue
 
-            img_resized = cv2.resize(img, (_DEFAULT_IMG_SIZE, _DEFAULT_IMG_SIZE))
+            img_resized = cv2.resize(img, (self._img_size, self._img_size))
             img_rgb = cv2.cvtColor(img_resized, cv2.COLOR_BGR2RGB)
             img_input = np.expand_dims(img_rgb.astype(np.float32) / 255.0, axis=0)
 
