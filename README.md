@@ -109,6 +109,9 @@ Validation accuracy climbs steadily from 0.73 (epoch 1) to **0.903** (epoch 20)
 with no sign of overfitting — the train/val gap stays under 1.5 points. Balanced
 class weighting is enabled to lift the under-represented `trash` class.
 
+Training curves, per-epoch history, and Grad-CAM sample heatmaps from the final
+run are in [results/](results/) (see [results/README.md](results/README.md)).
+
 ## Project Structure
 
 ```
