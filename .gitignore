@@ -57,6 +57,13 @@ saved_model/
 
 # Local tooling config
 .claude/
+CLAUDE_CODE_EXECUTION_PLAN.md
+
+# Local working result folders (raw exports / model zips — not for upload)
+hasil_final/
+hasil_notebook/
+waste_clf_results_*/
+*.zip
 
 # Testing
 .pytest_cache/
