@@ -65,6 +65,10 @@ hasil_notebook/
 waste_clf_results_*/
 *.zip
 
+# Local-only frontend design + throwaway venv (never upload)
+design_frontend/
+.ci_venv/
+
 # Testing
 .pytest_cache/
 .coverage

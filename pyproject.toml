@@ -28,6 +28,15 @@ warn_unused_configs = true
 disallow_untyped_defs = false
 ignore_missing_imports = true
 
+# TensorFlow/Keras/OpenCV ship without usable type information. When they are
+# installed (e.g. in CI) mypy would otherwise try to follow into their internals
+# and report spurious errors, so skip analysing them and treat their symbols as
+# Any. Without this, `mypy src/` passes locally (no TF) but fails in CI (TF present).
+[[tool.mypy.overrides]]
+module = ["tensorflow.*", "tensorflow", "keras.*", "keras", "cv2.*", "cv2"]
+ignore_missing_imports = true
+follow_imports = "skip"
+
 [tool.flake8]
 max-line-length = 100
 extend-ignore = ["E203", "W503"]
