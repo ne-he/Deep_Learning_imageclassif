@@ -1,0 +1,7 @@
+# TrashResNet50 — fokus akurasi & representasi fitur mendalam (residual learning).
+defaults: "base.yaml"
+
+model:
+  architecture: "resnet50"
+  pretrained: true
+  dropout: 0.4

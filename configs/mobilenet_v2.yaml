@@ -1,0 +1,7 @@
+# MobileNetV2 — fokus model ringan & inferensi cepat (depthwise separable conv).
+defaults: "base.yaml"
+
+model:
+  architecture: "mobilenet_v2"
+  pretrained: true
+  dropout: 0.4

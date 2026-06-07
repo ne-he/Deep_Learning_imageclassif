@@ -1,0 +1,7 @@
+# EfficientNet-B0 — fokus efisiensi & keseimbangan (compound scaling).
+defaults: "base.yaml"
+
+model:
+  architecture: "efficientnet_b0"
+  pretrained: true
+  dropout: 0.4

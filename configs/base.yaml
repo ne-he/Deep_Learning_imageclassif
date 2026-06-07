@@ -1,0 +1,35 @@
+# Shared defaults. Per-model configs extend this via `defaults: base.yaml`.
+data:
+  dataset_path: "./data/dataset-resized"   # 6 class folders inside
+  img_size: 224           # model input size (after crop)
+  resize_size: 256        # resize target before RandomCrop (train only)
+  batch_size: 32
+  val_split: 0.15
+  test_split: 0.15
+  seed: 42
+  num_workers: 0          # naikin ke 2-4 kalau multi-core
+  augmentation:
+    h_flip: 0.5
+    v_flip: 0.3
+    rotation: 20
+    color_jitter: [0.3, 0.3, 0.3, 0.1]   # brightness, contrast, saturation, hue
+    grayscale: 0.1
+
+model:
+  architecture: "resnet50"   # di-override di config per-model
+  num_classes: 6
+  pretrained: true
+  dropout: 0.4
+
+training:
+  epochs: 15
+  lr: 0.0001
+  weight_decay: 0.0001
+  optimizer: "adamw"
+  scheduler: "cosine"
+  label_smoothing: 0.1
+  early_stopping_patience: 4
+  use_weighted_sampler: true   # atasi imbalance kelas trash
+
+output_dir: "./outputs"
+classes: ["cardboard", "glass", "metal", "paper", "plastic", "trash"]
