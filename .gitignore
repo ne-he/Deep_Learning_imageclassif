@@ -21,3 +21,7 @@ venv/
 .DS_Store
 .vscode/
 .idea/
+
+# Frontend scratch / unused editor artifacts
+frontend/imageclass/uploads/
+frontend/imageclass/.thumbnail
