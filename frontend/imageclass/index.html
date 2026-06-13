@@ -1029,6 +1029,153 @@
     animation: flashBurst 240ms steps(3) forwards;
   }
 
+  /* ============ INFO MODAL (How it Works / Results / About) ============ */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: rgba(8,10,9,0.55);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 240ms ease;
+  }
+  .modal-overlay.show { opacity: 1; pointer-events: auto; }
+  .modal {
+    position: relative;
+    width: 100%;
+    max-width: 560px;
+    max-height: 86vh;
+    overflow-y: auto;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 40px 90px -25px rgba(0,0,0,0.6), 0 4px 16px rgba(0,0,0,0.2);
+    padding: 34px 34px 30px;
+    transform: translateY(14px) scale(0.985);
+    transition: transform 300ms cubic-bezier(0.22,1,0.36,1);
+    color: #111;
+  }
+  .modal-overlay.show .modal { transform: translateY(0) scale(1); }
+  .modal-close {
+    position: absolute;
+    top: 18px; right: 18px;
+    width: 32px; height: 32px;
+    border: none;
+    border-radius: 999px;
+    background: #f3f3f1;
+    color: #444;
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: background 140ms ease, transform 120ms ease;
+  }
+  .modal-close:hover { background: #e7e7e4; transform: rotate(90deg); }
+  .modal-panel { display: none; }
+  .modal-eyebrow {
+    font-family: 'Schibsted Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: #1f8a2e;
+  }
+  .modal-title {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: 38px;
+    letter-spacing: -1px;
+    line-height: 1.05;
+    margin: 8px 0 6px;
+    color: #0a0a0a;
+  }
+  .modal-lead {
+    font-family: 'Fustat', sans-serif;
+    font-size: 15px;
+    color: #555;
+    margin: 0 0 22px;
+    line-height: 1.45;
+  }
+  .modal-panel p {
+    font-family: 'Schibsted Grotesk', sans-serif;
+    font-size: 14.5px;
+    color: #3a3a3a;
+    line-height: 1.6;
+    margin: 0 0 14px;
+  }
+  .steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 16px; }
+  .step { display: flex; gap: 14px; align-items: flex-start; }
+  .step-n {
+    flex-shrink: 0;
+    width: 26px; height: 26px;
+    border-radius: 8px;
+    background: #0a0a0a;
+    color: #fff;
+    font-family: 'Fustat', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    display: inline-flex; align-items: center; justify-content: center;
+    margin-top: 1px;
+  }
+  .step b {
+    display: block;
+    font-family: 'Schibsted Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    color: #0a0a0a;
+    margin-bottom: 2px;
+  }
+  .step p { margin: 0; font-size: 14px; color: #555; line-height: 1.5; }
+  .modal-foot {
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid #ececea;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11.5px;
+    color: #8a8a8a;
+    letter-spacing: -0.2px;
+  }
+  /* results table */
+  .res-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; }
+  .res-table th, .res-table td {
+    text-align: left;
+    padding: 9px 10px;
+    font-family: 'Schibsted Grotesk', sans-serif;
+    font-size: 13px;
+  }
+  .res-table th {
+    font-weight: 600; font-size: 11px; letter-spacing: 0.4px;
+    text-transform: uppercase; color: #8a8a8a;
+    border-bottom: 1px solid #ececea;
+  }
+  .res-table td { color: #3a3a3a; border-bottom: 1px solid #f4f4f2; }
+  .res-table td:not(:first-child) { text-align: right; font-variant-numeric: tabular-nums; }
+  .res-table tr.is-best td { color: #0a0a0a; font-weight: 600; }
+  .res-table .live-tag {
+    display: inline-block; margin-left: 8px;
+    background: rgba(90,225,76,0.18); color: #1f8a2e;
+    border-radius: 999px; padding: 1px 8px;
+    font-size: 10px; font-weight: 600; letter-spacing: 0.2px;
+    vertical-align: middle;
+  }
+  .modal-tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 20px; }
+  .modal-tags span {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: #444;
+    background: #f3f3f1;
+    border-radius: 7px;
+    padding: 5px 10px;
+  }
+
+  body.revealing .modal { background: rgba(8,12,10,0.96); color: #d6ffe0; }
+  body.revealing .modal-title { color: #eafff0; }
+
 </style>
 </head>
 
@@ -1075,17 +1222,15 @@
         <span class="glitch-text" data-text="NemVision">NemVision</span>
       </div>
       <div class="nav-menu">
-        <a>Demo</a>
-        <a>How it Works
+        <a id="navDemo">Demo</a>
+        <a id="navHow">How it Works
           <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
         </a>
-        <a>Results</a>
-        <a>About</a>
-        <a class="gh-link" href="https://github.com/ne-he/Deep_Learning_imageclassif.git" target="_blank" rel="noopener">GitHub<span class="gh-tip" role="tooltip"><span class="scheme">https://</span><span class="host">github.com/</span><span class="repo">ne-he/Deep_Learning_imageclassif</span><span class="ext">.git</span></span></a>
+        <a id="navResults">Results</a>
+        <a id="navAbout">About</a>
       </div>
       <div class="nav-actions">
         <span class="gh-btn-wrap"><a class="btn btn-ghost" href="https://github.com/ne-he/Deep_Learning_imageclassif.git" target="_blank" rel="noopener" style="text-decoration:none;">GitHub</a><span class="gh-tip" role="tooltip"><span class="scheme">https://</span><span class="host">github.com/</span><span class="repo">ne-he/Deep_Learning_imageclassif</span><span class="ext">.git</span></span></span>
-        <button class="btn btn-dark">Try Demo</button>
       </div>
     </nav>
 
@@ -1245,6 +1390,59 @@
         </div>
       </div>
     </main>
+  </div>
+
+  <!-- ===================== INFO MODAL ===================== -->
+  <div class="modal-overlay" id="infoModal" aria-hidden="true">
+    <div class="modal" id="infoModalCard" role="dialog" aria-modal="true">
+      <button class="modal-close" data-modal-close aria-label="Close">&times;</button>
+
+      <!-- HOW IT WORKS -->
+      <div class="modal-panel" id="panel-how">
+        <div class="modal-eyebrow">How it works</div>
+        <h2 class="modal-title">From photo to prediction</h2>
+        <p class="modal-lead">Four steps run every time you hit Classify.</p>
+        <ol class="steps">
+          <li class="step"><span class="step-n">1</span><div><b>Preprocess</b><p>Your photo is resized to 224&times;224 and normalized to ImageNet statistics, the same transform the model saw during training.</p></div></li>
+          <li class="step"><span class="step-n">2</span><div><b>Classify</b><p>A ResNet50 fine-tuned on TrashNet runs a forward pass, and a softmax turns its outputs into probabilities across the six material classes.</p></div></li>
+          <li class="step"><span class="step-n">3</span><div><b>Explain with Grad-CAM</b><p>Gradients for the winning class are traced back to the last convolutional layer to build a heatmap of the regions that drove the decision.</p></div></li>
+          <li class="step"><span class="step-n">4</span><div><b>Read the result</b><p>You get the predicted material, its confidence, the full probability distribution, and the heatmap overlaid on your image.</p></div></li>
+        </ol>
+        <div class="modal-foot">Model served by FastAPI on Hugging Face Spaces, frontend on Vercel</div>
+      </div>
+
+      <!-- RESULTS -->
+      <div class="modal-panel" id="panel-results">
+        <div class="modal-eyebrow">Results</div>
+        <h2 class="modal-title">Three backbones, one fair split</h2>
+        <p class="modal-lead">Every model trained and evaluated on the identical seed-locked split, so the comparison is honest.</p>
+        <table class="res-table">
+          <thead><tr><th>Model</th><th>Acc</th><th>F1</th><th>AUC</th></tr></thead>
+          <tbody>
+            <tr class="is-best"><td>ResNet50 <span class="live-tag">live</span></td><td>91.6%</td><td>0.916</td><td>0.99</td></tr>
+            <tr><td>Ensemble</td><td>91.0%</td><td>0.911</td><td>0.99</td></tr>
+            <tr><td>MobileNetV2</td><td>84.2%</td><td>0.847</td><td>0.97</td></tr>
+            <tr><td>EfficientNet-B0</td><td>80.5%</td><td>0.806</td><td>0.97</td></tr>
+          </tbody>
+        </table>
+        <p>The hardest class is trash, with only 137 images in the dataset. A weighted sampler and label smoothing lift its recall well above what a naive model reaches.</p>
+        <div class="modal-foot">TrashNet, 70/15/15 split, test set never seen during training</div>
+      </div>
+
+      <!-- ABOUT -->
+      <div class="modal-panel" id="panel-about">
+        <div class="modal-eyebrow">About</div>
+        <h2 class="modal-title">See what the AI sees</h2>
+        <p>NemVision is a waste-image classifier that does two things at once. It predicts what a piece of trash is made of, and it shows the exact regions the model used to decide.</p>
+        <p>It is trained on TrashNet, 2,527 images across six materials: cardboard, glass, metal, paper, plastic, and trash. Three ImageNet-pretrained backbones were benchmarked under one identical split. ResNet50 won at 91.6% and is the model serving this demo.</p>
+        <p>The pipeline is built to stay honest on a small, imbalanced dataset: selective fine-tuning so general features stay intact, a weighted sampler to lift the rare trash class, label smoothing, AdamW with a cosine schedule, and a test set that is never touched during training. Grad-CAM adds explainability so a prediction is never a black box.</p>
+        <div class="modal-tags">
+          <span>PyTorch</span><span>torchvision</span><span>Grad-CAM</span><span>FastAPI</span><span>Hugging Face Spaces</span><span>Vercel</span>
+        </div>
+        <div class="modal-foot">Built by Nehemiah</div>
+      </div>
+
+    </div>
   </div>
 
 <script>
@@ -1630,6 +1828,48 @@
   function hideResult(){
     result.classList.remove('show');
     barFill.style.width = '0%';
+  }
+})();
+
+/* =====================================================================
+   INFO MODAL — How it Works / Results / About + Demo scroll
+===================================================================== */
+(function(){
+  const overlay = document.getElementById('infoModal');
+  if (!overlay) return;
+  const panels = {
+    how:     document.getElementById('panel-how'),
+    results: document.getElementById('panel-results'),
+    about:   document.getElementById('panel-about'),
+  };
+  function open(which){
+    Object.keys(panels).forEach(k => {
+      if (panels[k]) panels[k].style.display = (k === which ? 'block' : 'none');
+    });
+    overlay.classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+  function close(){
+    overlay.classList.remove('show');
+    document.body.style.overflow = '';
+  }
+  const triggers = { navHow: 'how', navResults: 'results', navAbout: 'about' };
+  Object.keys(triggers).forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('click', (e) => { e.preventDefault(); open(triggers[id]); });
+  });
+  overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
+  document.querySelectorAll('[data-modal-close]').forEach(b => b.addEventListener('click', close));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+
+  // Demo link smooth-scrolls to the classifier box.
+  const demo = document.getElementById('navDemo');
+  const target = document.getElementById('classifier');
+  if (demo && target) {
+    demo.addEventListener('click', (e) => {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
   }
 })();
 </script>
