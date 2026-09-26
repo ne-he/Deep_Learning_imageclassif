@@ -3,7 +3,14 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>NemVision See What the AI Sees</title>
+<title>NemVision · See What the AI Sees</title>
+<meta name="description" content="Drop a waste photo: a ResNet50 fine-tuned on TrashNet (91.6% accuracy) sorts it into six materials and shows a Grad-CAM heatmap of what the model looked at." />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="NemVision · See What the AI Sees" />
+<meta property="og:description" content="Drop a waste photo: a ResNet50 fine-tuned on TrashNet (91.6% accuracy) sorts it into six materials and shows a Grad-CAM heatmap of what the model looked at." />
+<meta name="twitter:card" content="summary" />
+<!-- favicon: the nav logo mark (recycle arrows, white on black) -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%23000'/%3E%3Cg transform='translate(4.5 4.5) scale(.625)' fill='none' stroke='%23fff' stroke-width='2.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 12a9 9 0 0 1 15-6.7'/%3E%3Cpath d='M21 5v4h-4'/%3E%3Cpath d='M21 12a9 9 0 0 1-15 6.7'/%3E%3Cpath d='M3 19v-4h4'/%3E%3C/g%3E%3C/svg%3E" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -659,8 +666,10 @@
   .gh-tip {
     position: absolute;
     top: calc(100% + 12px);
-    left: 50%;
-    transform: translate(-50%, 4px);
+    /* anchored to the button's right edge: centred, it ran ~30px past the
+       viewport on desktop and ~119px on phones, widening the whole page */
+    right: 0;
+    transform: translateY(4px);
     background: #0e1311;
     color: #d5f7c8;
     font-family: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
@@ -678,8 +687,8 @@
   .gh-tip::before {
     content: "";
     position: absolute;
-    top: -5px; left: 50%;
-    transform: translateX(-50%) rotate(45deg);
+    top: -5px; right: 37px; /* over the centre of the 82px GitHub button */
+    transform: rotate(45deg);
     width: 9px; height: 9px;
     background: #0e1311;
     border-radius: 2px;
@@ -691,12 +700,12 @@
   .gh-link:hover .gh-tip,
   .gh-btn-wrap:hover .gh-tip {
     opacity: 1;
-    transform: translate(-50%, 0);
+    transform: translateY(0);
   }
 
   /* ============ GLITCH REVEAL (hidden hacker layer) ============ */
 
-  /* Portrait layer — sits between video and content. Default hidden. */
+  /* Portrait layer: sits between video and content. Default hidden. */
   .glitch-portrait {
     position: fixed;
     inset: 0;
@@ -851,7 +860,7 @@
     80% { transform: translate(-1px, 0); }
   }
 
-  /* Headline scramble + slice — applied to .headline.scrambling */
+  /* Headline scramble + slice: applied to .headline.scrambling */
   .headline {
     position: relative;
   }
@@ -864,7 +873,7 @@
     transition: opacity 180ms ease;
   }
 
-  /* Secret reveal layer — split alignments (top-left + bottom-right) */
+  /* Secret reveal layer: split alignments (top-left + bottom-right) */
   .secret-reveal {
     position: fixed;
     inset: 0;
@@ -1230,7 +1239,7 @@
         <a id="navAbout">About</a>
       </div>
       <div class="nav-actions">
-        <span class="gh-btn-wrap"><a class="btn btn-ghost" href="https://github.com/ne-he/Deep_Learning_imageclassif.git" target="_blank" rel="noopener" style="text-decoration:none;">GitHub</a><span class="gh-tip" role="tooltip"><span class="scheme">https://</span><span class="host">github.com/</span><span class="repo">ne-he/Deep_Learning_imageclassif</span><span class="ext">.git</span></span></span>
+        <span class="gh-btn-wrap"><a class="btn btn-ghost" href="https://github.com/ne-he/Deep_Learning_imageclassif" target="_blank" rel="noopener" style="text-decoration:none;">GitHub</a><span class="gh-tip" role="tooltip"><span class="scheme">https://</span><span class="host">github.com/</span><span class="repo">ne-he/Deep_Learning_imageclassif</span></span></span>
       </div>
     </nav>
 
@@ -1447,7 +1456,7 @@
 
 <script>
 /* =====================================================================
-   VIDEO BACKGROUND — simple native loop, no fade
+   VIDEO BACKGROUND: simple native loop, no fade
 ===================================================================== */
 (function(){
   const video = document.getElementById('bg-video');
@@ -1457,7 +1466,7 @@
 })();
 
 /* =====================================================================
-   GLITCH REVEAL — hidden hacker layer on logo hover
+   GLITCH REVEAL: hidden hacker layer on logo hover
 ===================================================================== */
 (function(){
   const logo = document.getElementById('logo');
@@ -1465,13 +1474,13 @@
   const secret2 = document.querySelector('#secret2 .glyph');
   if (!logo || !secret1 || !secret2) return;
 
-  const CHARS = '!<>-_\\/[]{}—=+*^?#¤§¶†‡°∘∙•©®±×÷µ¢£¥€ÆØΞΩΨΣΔŁ¦';
+  const CHARS = '!<>-_\\/[]{}~=+*^?#¤§¶†‡°∘∙•©®±×÷µ¢£¥€ÆØΞΩΨΣΔŁ¦';
 
   let flickerRaf = null;
   let unflashTimer = null;
   let flashTimer = null;
 
-  // Continuous letter flicker — randomly swaps 1–2 chars every 60–200ms,
+  // Continuous letter flicker: randomly swaps 1–2 chars every 60–200ms,
   // then restores. Runs only while .revealing is on.
   function startFlicker(){
     cancelAnimationFrame(flickerRaf);
@@ -1554,7 +1563,7 @@
 })();
 
 /* =====================================================================
-   CLASSIFIER — interactive demo with bundled samples
+   CLASSIFIER: interactive demo with bundled samples
 ===================================================================== */
 (function(){
   const CLASSES = ['cardboard','glass','metal','paper','plastic','trash'];
@@ -1710,12 +1719,12 @@
       if (API_BASE) {
         classifyViaApi(pendingFile);
       } else {
-        // No backend configured — show a mocked plausible result
+        // No backend configured: show a mocked plausible result
         const fake = mockResultForUpload(pendingFile);
         runClassify(fake);
       }
     } else {
-      // nothing loaded — pick a sample to demo
+      // nothing loaded: pick a sample to demo
       const s = SAMPLES[sampleIdx % SAMPLES.length];
       sampleIdx++;
       pendingSample = s;
@@ -1832,7 +1841,7 @@
 })();
 
 /* =====================================================================
-   INFO MODAL — How it Works / Results / About + Demo scroll
+   INFO MODAL: How it Works / Results / About + Demo scroll
 ===================================================================== */
 (function(){
   const overlay = document.getElementById('infoModal');
