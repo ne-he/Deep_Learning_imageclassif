@@ -1,4 +1,4 @@
-# TrashResNet50 — fokus akurasi & representasi fitur mendalam (residual learning).
+# TrashResNet50: fokus akurasi & representasi fitur mendalam (residual learning).
 defaults: "base.yaml"
 
 model:

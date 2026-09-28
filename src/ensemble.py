@@ -1,6 +1,6 @@
 """Soft-voting ensemble: average softmax probabilities across models.
 
-Combining complementary backbones usually beats any single model — it was
+Combining complementary backbones usually beats any single model: it was
 the top performer in the original comparison.
 """
 

@@ -2,7 +2,7 @@
 
 Highlights which image regions drive a prediction. Hooks are removable
 (:meth:`GradCAM.remove`) so a model can still be exported (TorchScript/ONNX)
-afterwards — fixing the export failure in the original notebook.
+afterwards, fixing the export failure in the original notebook.
 """
 
 from __future__ import annotations
@@ -98,7 +98,7 @@ def save_gradcam_grid(model, target_layer, samples: List[Tuple[torch.Tensor, int
         axes[1, col].set_title(f"Pred: {class_names[pred_idx]}\n({conf*100:.0f}%)", fontsize=9)
         axes[1, col].axis("off")
     cam.remove()
-    fig.suptitle("Grad-CAM — one sample per class", fontsize=13)
+    fig.suptitle("Grad-CAM: one sample per class", fontsize=13)
     fig.tight_layout()
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)

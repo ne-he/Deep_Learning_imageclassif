@@ -1,4 +1,4 @@
-# EfficientNet-B0 — fokus efisiensi & keseimbangan (compound scaling).
+# EfficientNet-B0: fokus efisiensi & keseimbangan (compound scaling).
 defaults: "base.yaml"
 
 model:

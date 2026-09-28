@@ -1,4 +1,4 @@
-"""Trash image classification — PyTorch, modular, config-driven.
+"""Trash image classification: PyTorch, modular, config-driven.
 
 Merge of the best parts of two implementations:
 - Modeling (3-model comparison, selective fine-tuning, weighted sampler,

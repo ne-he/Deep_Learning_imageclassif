@@ -24,7 +24,7 @@ from src.utils import get_device, set_seed
 
 
 def collect_one_per_class(dataset, num_classes: int):
-    """Return ``[(img_tensor, label), ...]`` — first sample found per class."""
+    """Return ``[(img_tensor, label), ...]``: first sample found per class."""
     found = {}
     for img, label in dataset:
         label = int(label)

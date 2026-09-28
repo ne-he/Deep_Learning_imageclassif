@@ -3,7 +3,7 @@
 Three ImageNet-pretrained backbones are adapted for 6-class trash
 classification. Only the deepest block(s) + a fresh classifier head are
 unfrozen, so general low-level features stay intact while task-specific
-features adapt — appropriate for a small (~2.5k image) dataset.
+features adapt, appropriate for a small (~2.5k image) dataset.
 """
 
 from __future__ import annotations

@@ -2,7 +2,7 @@
 
 Mirrors the notebook pipeline but is config-driven (no hardcoded paths):
 - Train: Resize -> RandomCrop -> flips/rotation/jitter/grayscale -> ImageNet norm.
-- Val/Test: Resize -> ImageNet norm (no augmentation — honest evaluation).
+- Val/Test: Resize -> ImageNet norm (no augmentation, honest evaluation).
 - WeightedRandomSampler oversamples minority classes (e.g. ``trash``).
 """
 
